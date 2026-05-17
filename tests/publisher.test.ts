@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parsePinmeOutput } from "../src/publisher";
+import { parsePinmeOutput } from "../src/publisher.js";
 
 describe("parsePinmeOutput", () => {
   it("extracts an https URL and CID from PinMe output", () => {

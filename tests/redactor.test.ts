@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { redactTranscript } from "../src/redactor";
-import type { Transcript } from "../src/types";
+import { redactTranscript } from "../src/redactor.js";
+import type { Transcript } from "../src/types.js";
 
 function transcriptWith(text: string): Transcript {
   return {

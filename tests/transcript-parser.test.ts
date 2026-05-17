@@ -1,6 +1,6 @@
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { parseTranscript } from "../src/transcript-parser";
+import { parseTranscript } from "../src/transcript-parser.js";
 
 describe("parseTranscript", () => {
   it("normalizes Claude Code JSONL into shareable messages", async () => {
@@ -11,7 +11,7 @@ describe("parseTranscript", () => {
     expect(transcript.stats.messageCount).toBe(3);
     expect(transcript.stats.toolCallCount).toBe(1);
     expect(transcript.stats.warningCount).toBe(1);
-    expect(transcript.messages.map((message) => message.role)).toEqual(["user", "assistant", "tool"]);
+    expect(transcript.messages.map((message: { role: string }) => message.role)).toEqual(["user", "assistant", "tool"]);
     expect(transcript.messages[1].blocks).toEqual([
       { type: "text", text: "I will look." },
       { type: "tool_call", id: "toolu_1", name: "Bash", input: { command: "ls" } },

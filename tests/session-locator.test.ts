@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, utimes, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { encodeClaudeProjectPath, findTranscript, listProjectTranscripts } from "../src/session-locator";
+import { encodeClaudeProjectPath, findTranscript, listProjectTranscripts } from "../src/session-locator.js";
 
 describe("encodeClaudeProjectPath", () => {
   it("matches Claude Code project directory naming for absolute paths", () => {
@@ -53,6 +53,6 @@ describe("listProjectTranscripts", () => {
 
     const transcripts = await listProjectTranscripts({ claudeDir: root, projectPath });
 
-    expect(transcripts.map((item) => item.sessionId).sort()).toEqual(["a", "b"]);
+    expect(transcripts.map((item: { sessionId: string }) => item.sessionId).sort()).toEqual(["a", "b"]);
   });
 });

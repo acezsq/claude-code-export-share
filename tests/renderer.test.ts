@@ -2,8 +2,8 @@ import { mkdtemp, readFile, stat } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { exportStaticSite } from "../src/renderer";
-import type { Transcript } from "../src/types";
+import { exportStaticSite } from "../src/renderer.js";
+import type { Transcript } from "../src/types.js";
 
 const transcript: Transcript = {
   sessionId: "s1",
