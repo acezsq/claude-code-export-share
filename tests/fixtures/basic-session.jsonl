@@ -1,0 +1,5 @@
+{"type":"file-history-snapshot","messageId":"ignored","snapshot":{}}
+{"type":"user","sessionId":"s1","cwd":"/repo","timestamp":"2026-05-17T01:00:00.000Z","uuid":"u1","message":{"role":"user","content":"Please inspect the repo"}}
+{"type":"assistant","sessionId":"s1","cwd":"/repo","timestamp":"2026-05-17T01:00:01.000Z","uuid":"a1","parentUuid":"u1","message":{"role":"assistant","content":[{"type":"text","text":"I will look."},{"type":"tool_use","id":"toolu_1","name":"Bash","input":{"command":"ls"}}],"usage":{"input_tokens":10,"output_tokens":5}}}
+{"type":"user","sessionId":"s1","cwd":"/repo","timestamp":"2026-05-17T01:00:02.000Z","uuid":"u2","parentUuid":"a1","message":{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_1","content":"README.md\nsrc"}]}}
+not json
