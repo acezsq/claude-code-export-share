@@ -2,6 +2,52 @@
 
 Export a Claude Code session transcript into a static web page and publish it as a public, permanent PinMe/IPFS link.
 
+中文说明见 [README.zh-CN.md](./README.zh-CN.md).
+
+## Quick Start in Claude Code
+
+Install the CLI:
+
+```bash
+npm install -g github:acezsq/claude-code-export-share
+```
+
+Install and log in to PinMe:
+
+```bash
+npm install -g pinme
+pinme login
+```
+
+Install the Claude Code skill:
+
+```bash
+mkdir -p ~/.claude/skills/export-share/scripts
+curl -fsSL https://raw.githubusercontent.com/acezsq/claude-code-export-share/main/.claude/skills/export-share/SKILL.md \
+  -o ~/.claude/skills/export-share/SKILL.md
+curl -fsSL https://raw.githubusercontent.com/acezsq/claude-code-export-share/main/.claude/skills/export-share/scripts/export-share.sh \
+  -o ~/.claude/skills/export-share/scripts/export-share.sh
+chmod +x ~/.claude/skills/export-share/scripts/export-share.sh
+```
+
+Restart Claude Code if it was already running, then use either slash commands:
+
+```text
+/export-share
+/export-share list
+/export-share export-current
+```
+
+Or ask in natural language:
+
+```text
+Use export-share to publish the current Claude Code session.
+Share this Claude Code conversation with export-share.
+Export the current session locally with export-share.
+```
+
+`/export-share` and natural-language publish requests create a public, permanent PinMe/IPFS page. Only run them for sessions you are comfortable sharing publicly.
+
 ## Install
 
 Install the CLI directly from GitHub:
@@ -108,13 +154,13 @@ If Claude Code was already running and `~/.claude/skills` did not exist before, 
 
 Then use `/export-share` inside Claude Code.
 
-The skill runs:
+The skill uses this bundled command router:
 
 ```bash
 ${CLAUDE_SKILL_DIR}/scripts/export-share.sh
 ```
 
-That defaults to:
+For `/export-share` with no arguments, it defaults to:
 
 ```bash
 claude-share publish --current --yes
@@ -130,3 +176,5 @@ You can also pass a skill command:
 /export-share install-cli
 /export-share help
 ```
+
+For natural-language requests, Claude Code selects the matching script command. For example, asking to "export locally without publishing" uses `export-current`, while asking to "share this conversation" uses `publish-current`.
