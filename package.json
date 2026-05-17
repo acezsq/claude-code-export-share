@@ -1,0 +1,22 @@
+{
+  "name": "claude-code-export-share",
+  "version": "0.1.0",
+  "description": "Export and publish Claude Code sessions as static share pages.",
+  "type": "module",
+  "bin": {
+    "claude-share": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.9"
+  }
+}
