@@ -4,9 +4,20 @@ Export a Claude Code session transcript into a static web page and publish it as
 
 ## Install
 
+Install the CLI directly from GitHub:
+
 ```bash
+npm install -g github:acezsq/claude-code-export-share
+```
+
+Or clone the repo and link it locally:
+
+```bash
+git clone https://github.com/acezsq/claude-code-export-share.git
+cd claude-code-export-share
 npm install
 npm run build
+npm link
 ```
 
 For PinMe publishing:
@@ -16,37 +27,42 @@ npm install -g pinme
 pinme login
 ```
 
+Verify the CLI:
+
+```bash
+claude-share
+```
+
 ## Usage
 
 List sessions for the current project:
 
 ```bash
-npm run build
-node dist/cli.js list
+claude-share list
 ```
 
 Export the latest session for the current project:
 
 ```bash
-node dist/cli.js export --current
+claude-share export --current
 ```
 
 Export a known session:
 
 ```bash
-node dist/cli.js export --session <session-id> --claude-dir ~/.claude --out .claude-share/<session-id>
+claude-share export --session <session-id> --claude-dir ~/.claude --out .claude-share/<session-id>
 ```
 
 Publish the latest session:
 
 ```bash
-node dist/cli.js publish --current
+claude-share publish --current
 ```
 
 Publish a known session without the confirmation prompt:
 
 ```bash
-node dist/cli.js publish --session <session-id> --yes
+claude-share publish --session <session-id> --yes
 ```
 
 ## Local Preview
@@ -66,16 +82,33 @@ Published pages are public and intended to be permanent. Claude Code transcripts
 
 Content published to IPFS-style systems may remain accessible even if a pin or gateway link is removed.
 
-## Claude Code Slash Command
+## Claude Code Skill
 
-Create a project command such as `.claude/commands/export-share.md`:
+This repo includes a Claude Code skill at `.claude/skills/export-share/SKILL.md`.
 
-````md
-Run the local exporter and publish the current Claude Code conversation:
+Install it for your user:
 
 ```bash
-node /absolute/path/to/claude-code-export-share/dist/cli.js publish --current
+mkdir -p ~/.claude/skills
+cp -R .claude/skills/export-share ~/.claude/skills/export-share
 ```
-````
+
+Or install it directly from GitHub:
+
+```bash
+mkdir -p ~/.claude/skills/export-share
+curl -fsSL https://raw.githubusercontent.com/acezsq/claude-code-export-share/main/.claude/skills/export-share/SKILL.md \
+  -o ~/.claude/skills/export-share/SKILL.md
+```
+
+If Claude Code was already running and `~/.claude/skills` did not exist before, restart Claude Code once so it picks up the new skill directory.
 
 Then use `/export-share` inside Claude Code.
+
+The skill runs:
+
+```bash
+claude-share publish --current --yes
+```
+
+That means invoking `/export-share` is an explicit confirmation to publish the current session as a public, permanent PinMe/IPFS page.
