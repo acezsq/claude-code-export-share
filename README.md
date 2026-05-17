@@ -96,9 +96,12 @@ cp -R .claude/skills/export-share ~/.claude/skills/export-share
 Or install it directly from GitHub:
 
 ```bash
-mkdir -p ~/.claude/skills/export-share
+mkdir -p ~/.claude/skills/export-share/scripts
 curl -fsSL https://raw.githubusercontent.com/acezsq/claude-code-export-share/main/.claude/skills/export-share/SKILL.md \
   -o ~/.claude/skills/export-share/SKILL.md
+curl -fsSL https://raw.githubusercontent.com/acezsq/claude-code-export-share/main/.claude/skills/export-share/scripts/export-share.sh \
+  -o ~/.claude/skills/export-share/scripts/export-share.sh
+chmod +x ~/.claude/skills/export-share/scripts/export-share.sh
 ```
 
 If Claude Code was already running and `~/.claude/skills` did not exist before, restart Claude Code once so it picks up the new skill directory.
@@ -108,7 +111,22 @@ Then use `/export-share` inside Claude Code.
 The skill runs:
 
 ```bash
+${CLAUDE_SKILL_DIR}/scripts/export-share.sh
+```
+
+That defaults to:
+
+```bash
 claude-share publish --current --yes
 ```
 
 That means invoking `/export-share` is an explicit confirmation to publish the current session as a public, permanent PinMe/IPFS page.
+
+You can also pass a skill command:
+
+```text
+/export-share list
+/export-share export-current
+/export-share install-cli
+/export-share help
+```

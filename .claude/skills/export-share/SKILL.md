@@ -1,12 +1,19 @@
 ---
 name: export-share
 description: Export and publish the current Claude Code session as a public permanent PinMe/IPFS link. Use only when the user explicitly invokes /export-share.
-disable-model-invocation: true
-allowed-tools: Bash(claude-share publish --current --yes)
+allowed-tools: Bash(${CLAUDE_SKILL_DIR}/scripts/export-share.sh *)
 ---
 
-Publish the current Claude Code session as a public, permanent page.
+Run the bundled command router.
 
-!`claude-share publish --current --yes`
+!`${CLAUDE_SKILL_DIR}/scripts/export-share.sh $ARGUMENTS`
 
-Reply with the public URL from the command output. If the command fails, show the error and say no page was published.
+Supported commands:
+
+- No arguments or `publish-current`: publish the current session as a public, permanent PinMe/IPFS page.
+- `export-current`: export the current session locally without publishing.
+- `list`: list Claude Code sessions for the current project.
+- `install-cli`: install the `claude-share` CLI from GitHub.
+- `help`: show script help.
+
+Reply with the script output. If publication fails, show the error and say no page was published.
