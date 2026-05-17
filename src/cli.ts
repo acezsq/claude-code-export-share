@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 import { mkdir } from "node:fs/promises";
+import { realpathSync } from "node:fs";
 import path from "node:path";
 import process, { stdin as input, stdout as output } from "node:process";
 import readline from "node:readline/promises";
+import { fileURLToPath } from "node:url";
 import { uploadWithPinme } from "./publisher.js";
 import { redactTranscript, type RedactionRule } from "./redactor.js";
 import { exportStaticSite } from "./renderer.js";
@@ -55,6 +57,13 @@ export function parseCliArgs(argv: string[]): CliOptions {
   }
 
   return options;
+}
+
+export function isDirectCli(metaUrl: string, argvEntry = process.argv[1], resolvedArgvEntry?: string): boolean {
+  if (!argvEntry) return false;
+  const modulePath = fileURLToPath(metaUrl);
+  const entryPath = resolvedArgvEntry ?? realpathSync(argvEntry);
+  return modulePath === entryPath;
 }
 
 function usage(): string {
@@ -132,7 +141,7 @@ export async function runCli(argv = process.argv.slice(2)): Promise<void> {
   console.log(upload.url ?? upload.stdout.trim());
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (isDirectCli(import.meta.url)) {
   runCli().catch((error: unknown) => {
     console.error(error instanceof Error ? error.message : String(error));
     process.exitCode = 1;
